@@ -40,8 +40,8 @@
                 :basis     basis
                 :src-dirs  ["src"]})
 
-  (generate-source-file! 'heroicons.electric.v24.outline "vendors/heroicons/src/24/outline")
-  (generate-source-file! 'heroicons.electric.v24.solid "vendors/heroicons/src/24/solid")
+  (generate-source-file! 'heroicons.electric.v24.outline "vendors/heroicons/optimized/24/outline")
+  (generate-source-file! 'heroicons.electric.v24.solid "vendors/heroicons/optimized/24/solid")
 
   (b/jar {:class-dir "target/gen"
           :jar-file jar-file}))
