@@ -34,7 +34,7 @@
      (vector? form) (let [[tag props & body] form
                           [context next-context] (infer-context context tag)]
                       `(~(symbol (context->ns context) (name tag))
-                        ~@(when (seq props) [`(dom/props ~props)])
+                        ~@(when (seq props) [`(dom/props ~(dissoc props :xmlns))])
                         ~@(when (seq body)
                             (remove nil? (map (partial hiccup->electric next-context) body)))))
      (string? form) (let [s (str/trim form)]
