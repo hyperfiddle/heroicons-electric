@@ -8,7 +8,7 @@
 
 (def lib 'com.hyperfiddle/heroicons-electric)
 (def version (b/git-process {:git-args "describe --tags --long --always --dirty"}))
-(def basis (b/create-basis {:project "deps.edn" :aliases [:dev]}))
+(def basis (b/create-basis {:project "deps.edn"}))
 (def jar-file (format "target/%s-%s.jar" (name lib) version))
 
 (defn pprint-str [o]
