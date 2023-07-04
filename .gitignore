@@ -1,2 +1,4 @@
 /target/
 /.cpcache/
+/.shadow-cljs/
+/resources/public/js
