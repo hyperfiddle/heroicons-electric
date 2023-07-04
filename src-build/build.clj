@@ -18,17 +18,19 @@
       (p/pprint o))))
 
 (defn ns-form [ns]
-  (list 'ns ns
-    '(:refer-clojure :exclude [key map])
-    '(:require [hyperfiddle.electric :as e]
-               [hyperfiddle.electric-dom2 :as dom]
-               [hyperfiddle.electric-svg :as svg])))
+  (format
+"(ns %s
+  (:refer-clojure :exclude [key map])
+  (:require [hyperfiddle.electric :as e]
+            [hyperfiddle.electric-dom2 :as dom]
+            [hyperfiddle.electric-svg :as svg]))
+  #?(:cljs (:require-macros [%s]))" ns ns))
 
 (defn generate-source-file! [ns svg-source-path]
   (let [segments (str/split (name ns) #"\.")
         out-path (str "target/gen/" (str/join "/" segments ) ".cljc")]
     (io/make-parents out-path)
-    (spit out-path (str (pprint-str (ns-form ns)) "\n"))
+    (spit out-path (str (ns-form ns) "\n"))
     (binding [*ns* (create-ns ns)]
       (doseq [def (importer/generate-defs svg-source-path)]
         (spit out-path (str (pprint-str def) "\n") :append true)))))
