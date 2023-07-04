@@ -3,7 +3,8 @@
             [hyperfiddle.electric.svg-importer :as importer]
             [clojure.java.io :as io]
             [clojure.pprint :as p]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [deps-deploy.deps-deploy :as d]))
 
 (def lib 'com.hyperfiddle/heroicons-electric)
 (def version (b/git-process {:git-args "describe --tags --long --always --dirty"}))
@@ -34,7 +35,7 @@
 
 (defn build [_]
   (b/delete {:path "target"})
-  (b/write-pom {:class-dir "target/gen"
+  (b/write-pom {:target "target"
                 :lib       lib
                 :version   version
                 :basis     basis
@@ -45,6 +46,11 @@
 
   (b/jar {:class-dir "target/gen"
           :jar-file jar-file}))
+
+(defn deploy [_]
+  (d/deploy {:installer :remote
+             :artifact  jar-file
+             :pom-file  "target/pom.xml"}))
 
 (comment
   (build nil)

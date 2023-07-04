@@ -2,4 +2,5 @@
  :aliases {:build {:extra-paths ["src-build"]
                    :ns-default  build
                    :extra-deps  {io.github.clojure/tools.build {:git/tag "v0.8.2" :git/sha "ba1a2bf"}
+                                 slipset/deps-deploy           {:mvn/version "0.2.1"}
                                  org.clj-commons/hickory       {:mvn/version "0.7.3"}}}}}
