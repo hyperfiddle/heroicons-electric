@@ -17,4 +17,5 @@ Electric Clojure:
 # Build steps
 
 - `git submodule init --recursive`
-- `clj -T:build build`
+- `clj -X:build build`
+- `env CLOJARS_USERNAME=username CLOJARS_PASSWORD=clojar-token clj -X:build deploy`
