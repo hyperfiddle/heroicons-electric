@@ -1,3 +1,5 @@
+[![Clojars Project](https://img.shields.io/clojars/v/com.hyperfiddle/heroicons-electric.svg)](https://clojars.org/com.hyperfiddle/heroicons-electric)
+
 # Use Heroicons from Electric Clojure
 
 Provides `heroicons.electric` for Electric Clojure, just like Heroicons provides
