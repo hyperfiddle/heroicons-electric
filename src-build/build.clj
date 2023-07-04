@@ -35,11 +35,14 @@
 
 (defn build [_]
   (b/delete {:path "target"})
-  (b/write-pom {:target "target"
-                :lib       lib
-                :version   version
-                :basis     basis
-                :src-dirs  ["src"]})
+  (b/write-pom {:target   "target"
+                :lib      lib
+                :version  version
+                :basis    basis
+                :src-dirs ["src"]
+                :scm      {:url                 "https://github.com/hyperfiddle/heroicons-electric"
+                           :connection          "scm:git:git://github.com/hyperfiddle/heroicons-electric.git"
+                           :developerConnection "scm:git:ssh://git@github.com/hyperfiddle/heroicons-electric.git"}})
 
   (generate-source-file! 'heroicons.electric.v24.outline "vendors/heroicons/optimized/24/outline")
   (generate-source-file! 'heroicons.electric.v24.solid "vendors/heroicons/optimized/24/solid")
