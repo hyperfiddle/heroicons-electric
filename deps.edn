@@ -11,6 +11,7 @@
                                   :mvn/version "0.17.7" ; (Jetty 10) is NOT Java 8 compatible
                                   :exclusions [org.slf4j/slf4j-api info.sunng/ring-jetty9-adapter-http3]} ; no need
                                  ring-basic-authentication/ring-basic-authentication {:mvn/version "1.1.1"}}
+                   :override-deps {com.hyperfiddle/electric {:local/root "vendors/electric"}}
                    :exec-fn     user/main
                    :exec-args   {}
                    :jvm-opts ["-Xss4m"]}}}
