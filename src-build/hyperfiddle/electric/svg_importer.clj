@@ -64,11 +64,11 @@
                                  icon-name      (icon-name file)
                                  Body           (gensym "Body_")]
                              (conj r `((e/def ~(symbol (str icon-name "*"))
-                                         (e/fn [~Body]
+                                         (e/fn* [~Body]
                                            ~(list* svg `(new ~Body) body)))
                                        (defmacro ~(symbol icon-name) [~'& ~'body]
                                          (list 'new '~(symbol (name (ns-name *ns*)) (str icon-name "*"))
-                                           (list* `e/fn [] ~'body)))))))
+                                           (list* `e/fn* [] ~'body)))))))
                    []
                    files)]
     (mapcat identity bindings)))
