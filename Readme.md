@@ -11,6 +11,7 @@ import {ChevronUpDown} from "@heroicons/react/24/ouline";
 ```
 
 Electric Clojure:
+
 ```clojure
 (ns my-view
   (:require [hyperfiddle.electric :as e]
@@ -21,3 +22,18 @@ Electric Clojure:
   (chevron-up-down (dom/props {:style {:width "1em"}})))
 
 ```
+
+# Build steps
+
+- `git submodule init --recursive`
+- `clj -X:build build`
+- `env CLOJARS_USERNAME=username CLOJARS_PASSWORD=clojar-token clj -X:build deploy`
+
+# Run demo app
+
+Renders all icons for both solid and outline styles.
+
+```
+clj -X:dev user/main
+```
+
