@@ -2,3 +2,6 @@
 /.cpcache/
 /.shadow-cljs/
 /resources/public/js
+/.env
+/.DS_Store
+/.nrepl-port
