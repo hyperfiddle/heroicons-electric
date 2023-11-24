@@ -61,17 +61,13 @@
                 (sort))
         bindings (reduce (fn [r file]
                            (let [[svg & body]   (svg->electric (slurp file))
-                                 icon-name      (icon-name file)
-                                 Body           (gensym "Body_")]
-                             (conj r `((e/def ~(symbol (str icon-name "*"))
-                                         (e/fn* [~Body]
-                                           ~(list* svg `(new ~Body) body)))
-                                       (defmacro ~(symbol icon-name) [~'& ~'body]
-                                         (list 'new '~(symbol (name (ns-name *ns*)) (str icon-name "*"))
-                                           (list* `e/fn* [] ~'body)))))))
+                                 icon-name      (icon-name file)]
+                             (conj r `((defmacro ~(symbol icon-name) [~'& ~'user-body]
+                                         (concat '(~svg ~@body) ~'user-body))))))
                    []
                    files)]
     (mapcat identity bindings)))
 
 (comment
-  (generate-defs "./vendors/heroicons/src/24/outline") )
+  (generate-defs "./vendors/heroicons/src/24/outline")
+)
