@@ -44,7 +44,16 @@
                 :src-dirs ["src"]
                 :scm      {:url                 "https://github.com/hyperfiddle/heroicons-electric"
                            :connection          "scm:git:git://github.com/hyperfiddle/heroicons-electric.git"
-                           :developerConnection "scm:git:ssh://git@github.com/hyperfiddle/heroicons-electric.git"}})
+                           :developerConnection "scm:git:ssh://git@github.com/hyperfiddle/heroicons-electric.git"}
+                :pom-data [[:licenses
+                            [:license
+                             [:name "Eclipse Public License v2.0"]
+                             [:url "https://www.eclipse.org/legal/epl-v20.html"]
+                             [:comments "Covers the code translating Heroicon's svg files into Electric code."]]
+                            [:license
+                             [:name "MIT License"]
+                             [:url "https://www.eclipse.org/legal/epl-v20.html"]
+                             [:comments "Covers translated Heroicons's SVG files."]]]]})
 
   (generate-source-file! 'heroicons.electric3.v24.outline "vendors/heroicons/optimized/24/outline")
   (generate-source-file! 'heroicons.electric3.v24.solid "vendors/heroicons/optimized/24/solid")
