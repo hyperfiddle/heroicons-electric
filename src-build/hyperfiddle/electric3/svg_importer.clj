@@ -1,18 +1,18 @@
-(ns hyperfiddle.electric.svg-importer
+(ns hyperfiddle.electric3.svg-importer
   (:require
    [clojure.java.io :as io]
    [clojure.string :as str]
    [hickory.core :as html]
-   [hyperfiddle.electric :as-alias e]
-   [hyperfiddle.electric-dom2 :as-alias dom]
-   [hyperfiddle.electric-svg :as-alias svg])
+   [hyperfiddle.electric3 :as-alias e]
+   [hyperfiddle.electric-dom3 :as-alias dom]
+   [hyperfiddle.electric-svg3 :as-alias svg])
   (:import [org.jsoup Jsoup]
            [org.jsoup.nodes Attribute Attributes Comment DataNode Document
             DocumentType Element TextNode XmlDeclaration]
            [org.jsoup.parser Tag Parser]))
 
-(def context->ns {::html "hyperfiddle.electric-dom2"
-                  ::svg  "hyperfiddle.electric-svg"})
+(def context->ns {::html "hyperfiddle.electric-dom3"
+                  ::svg  "hyperfiddle.electric-svg3"})
 
 (defn infer-context "return [current-context next-context]" [context tag]
   (case context
@@ -51,23 +51,29 @@
   (svg->electric (slurp "./vendors/heroicons/src/24/outline/academic-cap.svg"))
   )
 
+(defn camel-case [s] (->> (str/split s #"[_\-\s]+") (map str/capitalize) (str/join "")))
 
 (defn icon-name [^java.io.File file] (str/join (str/split (.getName file) #"\.[^\.]*$")))
 
-(defn generate-defs [path]
+(defn generate-defs [ns path]
   (let [files (->> (io/file path)
                 (file-seq)
                 (filter #(.isFile %))
                 (sort))
         bindings (reduce (fn [r file]
-                           (let [[svg & body]   (svg->electric (slurp file))
-                                 icon-name      (icon-name file)]
-                             (conj r `((defmacro ~(symbol icon-name) [~'& ~'user-body]
-                                         (concat '(~svg ~@body) ~'user-body))))))
+                           (let [[svg & body] (svg->electric (slurp file))
+                                 macro-name   (icon-name file)
+                                 efn-name     (camel-case macro-name)]
+                             (conj r `((e/defn ~(symbol efn-name) [Body#]
+                                         (~svg ~@body)
+                                         (e/call Body#))
+                                       (defmacro ~(symbol macro-name) [~'& ~'user-body]
+                                         (concat '(e/call ~(symbol (name ns) efn-name))
+                                           (list (concat '(e/fn []) ~'user-body))))))))
                    []
                    files)]
     (mapcat identity bindings)))
 
 (comment
-  (generate-defs "./vendors/heroicons/src/24/outline")
+  (generate-defs 'heroicons.electric3.v24.outline "./vendors/heroicons/src/24/outline") 
 )

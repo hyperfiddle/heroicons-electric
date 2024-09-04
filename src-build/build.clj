@@ -1,6 +1,6 @@
 (ns build
   (:require [clojure.tools.build.api :as b]
-            [hyperfiddle.electric.svg-importer :as importer]
+            [hyperfiddle.electric3.svg-importer :as importer]
             [clojure.java.io :as io]
             [clojure.pprint :as p]
             [clojure.string :as str]
@@ -21,9 +21,9 @@
   (format
 "(ns %s
   (:refer-clojure :exclude [key map])
-  (:require [hyperfiddle.electric :as e]
-            [hyperfiddle.electric-dom2 :as dom]
-            [hyperfiddle.electric-svg :as svg]))
+  (:require [hyperfiddle.electric3 :as e]
+            [hyperfiddle.electric-dom3 :as dom]
+            [hyperfiddle.electric-svg3 :as svg]))
   #?(:cljs (:require-macros [%s]))" ns ns))
 
 (defn generate-source-file! [ns svg-source-path]
@@ -32,7 +32,7 @@
     (io/make-parents out-path)
     (spit out-path (str (ns-form ns) "\n"))
     (binding [*ns* (create-ns ns)]
-      (doseq [def (importer/generate-defs svg-source-path)]
+      (doseq [def (importer/generate-defs ns svg-source-path)]
         (spit out-path (str (pprint-str def) "\n") :append true)))))
 
 (defn build [_]
@@ -46,8 +46,8 @@
                            :connection          "scm:git:git://github.com/hyperfiddle/heroicons-electric.git"
                            :developerConnection "scm:git:ssh://git@github.com/hyperfiddle/heroicons-electric.git"}})
 
-  (generate-source-file! 'heroicons.electric.v24.outline "vendors/heroicons/optimized/24/outline")
-  (generate-source-file! 'heroicons.electric.v24.solid "vendors/heroicons/optimized/24/solid")
+  (generate-source-file! 'heroicons.electric3.v24.outline "vendors/heroicons/optimized/24/outline")
+  (generate-source-file! 'heroicons.electric3.v24.solid "vendors/heroicons/optimized/24/solid")
 
   (b/jar {:class-dir "target/gen"
           :jar-file jar-file}))
