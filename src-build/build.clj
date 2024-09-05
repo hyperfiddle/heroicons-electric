@@ -52,7 +52,7 @@
                              [:comments "Covers the code translating Heroicon's svg files into Electric code."]]
                             [:license
                              [:name "MIT License"]
-                             [:url "https://www.eclipse.org/legal/epl-v20.html"]
+                             [:url "https://github.com/hyperfiddle/heroicons-electric/blob/0327158262396639aa779ea2e8d11e67367da214/licenses/Notice.txt"]
                              [:comments "Covers translated Heroicons's SVG files."]]]]})
 
   (generate-source-file! 'heroicons.electric3.v24.outline "vendors/heroicons/optimized/24/outline")
